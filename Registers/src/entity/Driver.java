@@ -2,6 +2,8 @@ package entity;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
+import java.util.List;
 @Entity
 public class Driver {
     @Id
@@ -11,8 +13,10 @@ public class Driver {
     private String name;
     private int experience;
 
-    @OneToOne(mappedBy = "driver")
-    private Car car;
+    @OneToMany(mappedBy = "driver", cascade = CascadeType.ALL)
+    private List<Car> cars = new ArrayList<>();
+
+
 
     // Getters and Setters
 
@@ -32,11 +36,15 @@ public class Driver {
         return experience;
     }
 
-    public void setCar(Car car) {
-        this.car = car;
+    public void setCars(List<Car> cars) {
+        this.cars = cars;
     }
 
-    public Car getCar() {
-        return car;
+    public void setCar(Car car){
+        cars.add(car);
+    }
+
+    public List<Car> getCars() {
+        return cars;
     }
 }

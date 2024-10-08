@@ -4,40 +4,26 @@ import entity.Car;
 import entity.Driver;
 
 import jakarta.persistence.*;
+
+import java.util.List;
+
 public class Dao {
     //Write a service that persists both a Car and a Driver object into the database, ensuring the one-to-one relationship is enforced.
 
     private static EntityManagerFactory emff = Persistence.createEntityManagerFactory("lecass");
 
-    public void persistCarAndDriver(Car car, Driver driver) {
+    public void persistCarAndDriver(List<Car> cars, Driver driver) {
+        EntityManager em = emff.createEntityManager();
+        em.getTransaction().begin();
 
-        EntityManager emf = emff.createEntityManager();
-
-        EntityTransaction transaction = emf.getTransaction();
-        transaction.begin();
-
-        emf.persist(car);
-        emf.persist(driver);
-
-        transaction.commit();
-
-        emf.close();
-
+        for (Car car : cars) {
+            car.setDriver(driver);
+            em.persist(car);
+        }
+        em.persist(driver);
+        em.getTransaction().commit();
+        em.close();
     }
 
-    public void persistCarAndDriver2(CarManyToOne car, DriverOneToMany driver) {
 
-        EntityManager emf = emff.createEntityManager();
-
-        EntityTransaction transaction = emf.getTransaction();
-        transaction.begin();
-
-        emf.persist(car);
-        emf.persist(driver);
-
-        transaction.commit();
-
-        emf.close();
-
-    }
 }

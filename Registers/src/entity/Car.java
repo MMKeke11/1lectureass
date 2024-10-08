@@ -12,7 +12,8 @@ public class Car {
 
     private String model;
 
-    @OneToOne
+
+    @ManyToOne
     @JoinColumn(name = "driver_id")
     private Driver driver;
 
@@ -34,4 +35,6 @@ public class Car {
     public Driver getDriver() {
         return driver;
     }
+
+
 }
