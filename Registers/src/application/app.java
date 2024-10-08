@@ -18,12 +18,15 @@ public class app {
         car2.setModel("Honda");
 
         Driver driver = new Driver();
+        Driver driver2 = new Driver();
 
         driver.setName("John");
+        driver2.setName("Doe");
 
         List<Car> cars = List.of(car, car2);
+        List<Driver> drivers = List.of(driver, driver2);
 
-        dao.persistCarAndDriver(cars, driver);
+        dao.persistCarAndDriver(cars, drivers);
 
 
 

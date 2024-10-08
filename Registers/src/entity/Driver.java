@@ -13,7 +13,12 @@ public class Driver {
     private String name;
     private int experience;
 
-    @OneToMany(mappedBy = "driver", cascade = CascadeType.ALL)
+    @ManyToMany
+    @JoinTable(
+            name = "driver_car",
+            joinColumns = @JoinColumn(name = "driver_id"),
+            inverseJoinColumns = @JoinColumn(name = "car_id")
+    )
     private List<Car> cars = new ArrayList<>();
 
 

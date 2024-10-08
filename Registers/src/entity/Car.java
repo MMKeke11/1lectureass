@@ -2,6 +2,9 @@ package entity;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 
 @Entity
@@ -13,9 +16,8 @@ public class Car {
     private String model;
 
 
-    @ManyToOne
-    @JoinColumn(name = "driver_id")
-    private Driver driver;
+    @ManyToMany(mappedBy = "cars")
+    private List<Driver> drivers = new ArrayList<>();
 
     // Getters and Setters
 
@@ -29,12 +31,10 @@ public class Car {
     }
 
     public void setDriver(Driver driver) {
-        this.driver = driver;
+        drivers.add(driver);
     }
 
-    public Driver getDriver() {
-        return driver;
-    }
+
 
 
 }

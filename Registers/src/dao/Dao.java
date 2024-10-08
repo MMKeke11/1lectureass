@@ -12,15 +12,22 @@ public class Dao {
 
     private static EntityManagerFactory emff = Persistence.createEntityManagerFactory("lecass");
 
-    public void persistCarAndDriver(List<Car> cars, Driver driver) {
+    public void persistCarAndDriver(List<Car> cars, List<Driver> drivers) {
         EntityManager em = emff.createEntityManager();
         em.getTransaction().begin();
-
         for (Car car : cars) {
-            car.setDriver(driver);
             em.persist(car);
         }
-        em.persist(driver);
+        for (Driver driver : drivers) {
+            em.persist(driver);
+        }
+
+        for (Driver driver : drivers) {
+            for (Car car : cars) {
+                driver.setCar(car);
+                car.setDriver(driver);
+            }
+        }
         em.getTransaction().commit();
         em.close();
     }
